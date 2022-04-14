@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jenkins-builder
+spec:
+  containers:
+  - name: maven
+    image: maven:3.8.5-jdk-11-slim
+    command:
+    - /bin/cat
+    tty: true
+    volumeMounts:
+    - mountPath: /root/.m2/repository
+      name: maven-repo
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+      limits:
+        memory: "512Mi"
+        cpu: "250m"
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    command:
+    - /busybox/cat
+    tty: true
+    volumeMounts:
+      - name: kaniko-secret
+        mountPath: /kaniko/.docker
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+      limits:
+        memory: "512Mi"
+        cpu: "250m"
+  volumes:
+    - name: maven-repo
+      persistentVolumeClaim:
+        claimName: maven-pv-claim
+    - name: kaniko-secret
+      secret:
+        secretName: dockercred
+        items:
+          - key: .dockerconfigjson
+            path: config.json
