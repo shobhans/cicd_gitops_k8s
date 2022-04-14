@@ -69,7 +69,7 @@ pipeline {
                         cat deployment.yaml
                         sed -i "s/${APP_NAME}.*/${APP_NAME}:${BUILD_NUMBER}/g" deployment.yaml
                         cat deployment.yaml
-                        git config --global user.name "postshobhan"
+                        git config --global user.name "shobhan"
                         git config --global user.email "post.shobhan@gmail.com"
                         git add deployment.yaml
                         git commit -m 'Updated the Staging App deployment | Jenkins Pipeline'
