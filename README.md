@@ -4,7 +4,7 @@ CI part is achieved using Jenkins and for CD, ArgoCD is being used to deploy the
 
 ### Github repo for Kubernetes manifests
 
-https://github.com/postshobhan/argocd-config-repo.git
+https://github.com/shobhans/cicd_gitops_k8s.git
 
 ### Pipeline stages
 
@@ -17,13 +17,26 @@ This repo includes Jenkinsfile for the pipeline and build template for jenkins a
 5. Staging Deploy - Update K8S manifest & push to Repo
 6. Prod Deploy - Update K8S manifest & push to Repo
 
+### Docker image registry credential config for Kaniko
+
+Kaniko needs dockerhub credential to push images to registry. The credential secret is mounted as a volume to the kaniko container inside jenkins agent pod. Create docker registry credential secret using the following command.
+
+```bash
+kubectl -n jenkins create secret docker-registry dockercred \
+ --docker-server=https://index.docker.io/v1/ \
+ --docker-username=my-docker-username \
+ --docker-password='my-secret-password' \
+ --docker-email=my-email@email.com
+```
+
 - Stages from 3 (Kaniko Build & Push Image) to 6 (Prod Deploy) only execute for 'main' branch.
 - Tests are skipped to keep this demo simple.
 - Container image is built using Kanino and pushed to Dockerhub repo.
 - Stage 5 and 6 update K8S manifest repo.
 - ArgoCD monitors K8S manifests repo and creates/updates resources(deployment, service) on K8S.
 - For automatic invocation of the Jenkins pipeline, you have to setup a Github webhook.
-- On this demo, Jenkins is running within K8S and jobs are executed by its agents (template - builder.yaml).
+- On this demo, Jenkins is running within K8S (installed using helm chart, ref link provided below) and jobs are executed by its agents (template - builder.yaml).
+- on builder.yaml, a persistentVolumeClaim 'maven-pv-claim' is used to cache repo dependencies for maven. This pvc must be created in prior. Using a pvc is optional; pvc not created, builder.yaml should be updated accordingly.
 
 Services are using NodePort on this demo. To visit the running application after a successful deploy visit the following link:
 
