@@ -4,7 +4,7 @@ CI part is achieved using Jenkins and for CD, ArgoCD is being used to deploy the
 
 ### Github repo for Kubernetes manifests
 
-https://github.com/shobhans/cicd_gitops_k8s.git
+https://github.com/shobhans/argocd_app_k8s_manifests.git
 
 ### Pipeline stages
 
@@ -31,7 +31,7 @@ kubectl -n jenkins create secret docker-registry dockercred \
 
 - Stages from 3 (Kaniko Build & Push Image) to 6 (Prod Deploy) only execute for 'main' branch.
 - Tests are skipped to keep this demo simple.
-- Container image is built using Kanino and pushed to Dockerhub repo.
+- Container image is built using Kanino and pushed to Dockerhub image registry.
 - Stage 5 and 6 update K8S manifest repo.
 - ArgoCD monitors K8S manifests repo and creates/updates resources(deployment, service) on K8S.
 - For automatic invocation of the Jenkins pipeline, you have to setup a Github webhook.
