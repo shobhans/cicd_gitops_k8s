@@ -27,7 +27,7 @@ pipeline {
             }
         }
         
-        stage('Kaniko Build & Push Image') {
+        stage('Kaniko Image Build & Push Image') {
             when {
                 branch 'main'
             }
