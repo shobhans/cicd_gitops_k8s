@@ -18,7 +18,6 @@ pipeline {
                 container('maven') {
                     script {
                         sh '''
-                        echo pwd
                         mvn clean install -Dmaven.test.skip
                         '''
                     }
@@ -50,8 +49,8 @@ pipeline {
                 branch 'main'
             }
             steps {
-                git credentialsId: 'githubcred', 
-                url: 'https://github.com/postshobhan/argocd-config-repo.git',
+                git credentialsId: 'gh_shobhan_key', 
+                url: 'https://github.com/shobhans/argocd_app_k8s_manifests.git',
                 branch: 'main'
             }
         }
@@ -63,7 +62,7 @@ pipeline {
             steps {
                 milestone(1)
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'github_key', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'gh_shobhan_key', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh '''
                         cd staging
                         cat deployment.yaml
@@ -73,7 +72,7 @@ pipeline {
                         git config --global user.email "post.shobhan@gmail.com"
                         git add deployment.yaml
                         git commit -m 'Updated the Staging App deployment | Jenkins Pipeline'
-                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/argocd-config-repo.git HEAD:main
+                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/argocd_app_k8s_manifests.git HEAD:main
                         '''                        
                     }
                 }
@@ -88,17 +87,17 @@ pipeline {
                 input 'Deploy to Production ?'
                 milestone(2)
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'github_key', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'gh_shobhan_key', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh '''
                         cd prod
                         cat deployment.yaml
                         sed -i "s/${APP_NAME}.*/${APP_NAME}:${BUILD_NUMBER}/g" deployment.yaml
                         cat deployment.yaml
-                        git config --global user.name "postshobhan"
+                        git config --global user.name "shobhan"
                         git config --global user.email "post.shobhan@gmail.com"
                         git add deployment.yaml
                         git commit -m 'Updated the Prod App deployment | Jenkins Pipeline'
-                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/argocd-config-repo.git HEAD:main
+                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/argocd_app_k8s_manifests.git HEAD:main
                         '''                        
                     }
                 }
