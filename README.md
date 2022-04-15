@@ -8,6 +8,7 @@ https://github.com/shobhans/argocd_app_k8s_manifests.git
 
 ### Pipeline stages
 
+![gitops_pipeline](screenshots/gitops1.png)
 This repo includes Jenkinsfile for the pipeline and build template for jenkins agents on Kubernetes. The Jenkins pipeline contains following 6 stages with human intervention to proceed to production deploy (stage 6):
 
 1. Declarative: Checkout SCM
@@ -48,3 +49,8 @@ Services are using NodePort on this demo. To visit the running application after
 - Install Jenkins on K8S using helm - https://www.jenkins.io/doc/book/installing/kubernetes/#install-jenkins-with-helm-v3
 - Getting started with ArgoCD - https://argo-cd.readthedocs.io/en/stable/getting_started/
 - Create SpringBoot App - https://start.spring.io/
+
+### Screenshots
+
+![gitops_argocd](screenshots/gitops2.png)
+![gitops_argocd](screenshots/gitops3.png)
