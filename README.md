@@ -50,5 +50,3 @@ Services are using NodePort on this demo. To visit the running application after
 - Create SpringBoot App - https://start.spring.io/
 
 ### Test commit
-
-Test
