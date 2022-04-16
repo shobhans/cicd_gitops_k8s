@@ -46,7 +46,7 @@ Services are using NodePort on this demo. To visit the running application after
 
 ### Links
 
-- Install Jenkins on K8S using helm - https://www.jenkins.io/doc/book/installing/kubernetes/#install-jenkins-with-helm-v3
+- Install Jenkins on K8S using helm - https://github.com/shobhans/jenkins-using-helm-on-k8s
 - Getting started with ArgoCD - https://argo-cd.readthedocs.io/en/stable/getting_started/
 - Create SpringBoot App - https://start.spring.io/
 
