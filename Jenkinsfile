@@ -6,7 +6,7 @@ pipeline {
         }
     }
     environment {
-        DOCKERHUB_USERNAME = "shobhan"
+        DOCKERHUB_USERNAME = "maheshgaikwad21"
         APP_NAME = "docker-spring"
         IMAGE_TAG = "${BUILD_NUMBER}"
         IMAGE_NAME = "${DOCKERHUB_USERNAME}" + "/" + "${APP_NAME}"
@@ -49,8 +49,8 @@ pipeline {
                 branch 'main'
             }
             steps {
-                git credentialsId: 'gh_shobhan_key', 
-                url: 'https://github.com/shobhans/argocd_app_k8s_manifests.git',
+                git credentialsId: 'gh_mahesh_key', 
+                url: 'hhttps://github.com/mahesh2121/argocd_app_k8s_manifests.git',
                 branch: 'main'
             }
         }
